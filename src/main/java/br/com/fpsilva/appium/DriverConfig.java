@@ -1,4 +1,4 @@
-package br.com.fpsilva;
+package br.com.fpsilva.appium;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -10,14 +10,10 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args ) throws MalformedURLException {
+public class DriverConfig {
+    public final AppiumDriver appiumDriver;
 
+    public DriverConfig() throws MalformedURLException {
         BasicConfigurator.configure(); // configuração do log4j
 
         // configurando o driver do appium
@@ -33,6 +29,7 @@ public class App
         config.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
 
         URL urlConexao = new URL("http://127.0.0.1:4723/wd/hub"); // endereço do servidor appium
-        AppiumDriver driver = new AppiumDriver(urlConexao, config);
+        appiumDriver = new AppiumDriver(urlConexao, config);
     }
+
 }

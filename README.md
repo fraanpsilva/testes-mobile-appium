@@ -15,3 +15,5 @@
     * C#
     * Ruby
     * Python, etc
+    
+OBS: o UI Automator Viewer só funcionou pra mim com o java 8
