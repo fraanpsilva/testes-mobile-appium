@@ -10,10 +10,22 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DriverConfig {
-    public final AppiumDriver appiumDriver;
+public class AppiumDriverConfig {
 
-    public DriverConfig() throws MalformedURLException {
+
+    public final AppiumDriver appiumDriver;
+    private static AppiumDriverConfig _instance;
+
+    // garantindo que o a instanciação do appium driver seja chamado duas vezes
+    public static AppiumDriverConfig Instance(){
+        if (AppiumDriverConfig._instance == null){
+            AppiumDriverConfig._instance = new AppiumDriverConfig();
+
+        }
+        return AppiumDriverConfig._instance;
+    }
+
+    private AppiumDriverConfig() {
         BasicConfigurator.configure(); // configuração do log4j
 
         // configurando o driver do appium
@@ -28,8 +40,17 @@ public class DriverConfig {
         // informando o driver de automação
         config.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
 
-        URL urlConexao = new URL("http://127.0.0.1:4723/wd/hub"); // endereço do servidor appium
+        URL urlConexao = null; // endereço do servidor appium
+        try {
+            urlConexao = new URL("http://127.0.0.1:4723/wd/hub");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         appiumDriver = new AppiumDriver(urlConexao, config);
     }
+
+    /*
+    * Singleton: garante que tenha uma única instancia de um objeto
+    * e que eu tenha acesso global para essa instância: */
 
 }
